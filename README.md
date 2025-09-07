@@ -143,9 +143,11 @@ Would you like me to put together a **real-world example** where GX validates an
 ---
 
 Great Expectations is a Python library for validating, documenting, and profiling data. Here are some samples:
-Sample 1: Basic Expectation
+
+## 🔹 Sample 1: Basic Expectation
+
 Suppose we have a dataset of users with columns "name" and "age". We expect the "age" column to be between 18 and 100.
-Python
+```Python
 import pandas as pd
 from great_expectations.dataset import PandasDataset
 
@@ -165,34 +167,48 @@ dataset.expect_column_values_to_be_between("age", 18, 100)
 result = dataset.validate()
 
 print(result)
-Sample 2: Expectation Suite
+```
+## 🔹 Sample 2: Expectation Suite
+
 We can define multiple expectations and group them into an expectation suite.
-Python
+```Python
 import pandas as pd
 from great_expectations.dataset import PandasDataset
-from great_expectations.core import ExpectationSuite
+from great_expectations.core import ExpectationSuite, ExpectationConfiguration
 
-# Create a sample dataset
 data = pd.DataFrame({
     "name": ["John", "Jane", "Bob"],
     "age": [25, 30, 101]
 })
 
-# Create a Great Expectations dataset
 dataset = PandasDataset(data)
 
-# Define an expectation suite
+# Define a suite
 suite = ExpectationSuite("user_suite")
-suite.add_expectation(dataset.expect_column_to_exist("name"))
-suite.add_expectation(dataset.expect_column_values_to_be_between("age", 18, 100))
 
-# Validate the expectation suite
-result = dataset.validate(suite)
+# Add expectations properly
+suite.add_expectation(
+    ExpectationConfiguration(
+        expectation_type="expect_column_to_exist",
+        kwargs={"column": "name"}
+    )
+)
+suite.add_expectation(
+    ExpectationConfiguration(
+        expectation_type="expect_column_values_to_be_between",
+        kwargs={"column": "age", "min_value": 18, "max_value": 100}
+    )
+)
 
+# Validate against the suite
+result = dataset.validate(expectation_suite=suite)
 print(result)
-Sample 3: Data Profiling
+
+```
+## 🔹 3. Sample 3: Data Profiling
 Great Expectations can also profile your data to automatically generate expectations.
-Python
+
+```Python
 import pandas as pd
 from great_expectations.dataset import PandasDataset
 from great_expectations.profile import BasicSuiteBuilderProfiler
@@ -212,4 +228,5 @@ suite = profiler.build_suite()
 
 # Print the generated expectations
 print(suite)
+```
 These samples demonstrate basic usage of Great Expectations for data validation and profiling. You can customize expectations and suites to fit your specific use case.
