@@ -5,6 +5,7 @@ from great_expectations.dataset import PandasDataset
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))  # go up from tests/
 suite_path = os.path.join(BASE_DIR, "tests", "suites", "user_suite.json")
+
 def test_gx_suite_json():
     # Load JSON suite
     with open(suite_path, "r") as f:

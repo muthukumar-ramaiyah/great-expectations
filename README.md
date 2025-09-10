@@ -230,3 +230,8 @@ suite = profiler.build_suite()
 print(suite)
 ```
 These samples demonstrate basic usage of Great Expectations for data validation and profiling. You can customize expectations and suites to fit your specific use case.
+
+https://medium.com/@mostsignificant/python-data-validation-made-easy-with-the-great-expectations-package-8d1be266fd3f
+
+https://www.kaggle.com/datasets/airbnb/boston?resource=download
+
